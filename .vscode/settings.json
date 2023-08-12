@@ -1,0 +1,9 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\HP\\Downloads\\jaco-mp3-player-0.9.3.jar"
+    ],
+    "java.project.sourcePaths": [
+        "."
+    ]
+}
