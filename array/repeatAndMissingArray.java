@@ -8,7 +8,7 @@ class repeatAndMissingArray {
     //the missing number is difference between expectedSum and actualSum
     public static ArrayList<Integer> repeatedNumber(final List<Integer> A) {
         
-        int a=-1,b=-1;
+        int a=-1,b;
         long n = A.size();
 
         Collections.sort(A);
