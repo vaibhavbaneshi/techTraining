@@ -16,30 +16,30 @@ class TreeNode {
 }
 
 class Pair {
-    int indx;
+    int index;
     TreeNode node;
 
-    Pair(int indx,TreeNode node) {
-        this.indx = indx;
+    Pair(int index,TreeNode node) {
+        this.index = index;
         this.node = node;
     }
 }
 
 public class topViewTree {
 
-    static int indx = -1;
+    static int index = -1;
     public static TreeNode insert(int[] nodes) {
 
         if(nodes.length == 0) {
             return null;
         }
 
-        indx++;
-        if(nodes[indx] == -1) {
+        index++;
+        if(nodes[index] == -1) {
             return null;
         }
 
-        TreeNode newNode = new TreeNode(nodes[indx]);
+        TreeNode newNode = new TreeNode(nodes[index]);
         newNode.left = insert(nodes);
         newNode.right = insert(nodes);
 
@@ -58,18 +58,18 @@ public class topViewTree {
         while(!q.isEmpty()) {
             Pair p = q.poll();
             
-            int indx = p.indx;
+            int index = p.index;
             TreeNode node = p.node;
 
-            if(map.get(indx) == null) 
-                map.put(indx,node.data);
+            if(map.get(index) == null) 
+                map.put(index,node.data);
 
             if(node.left != null) {
-                q.offer(new Pair(indx-1, node.left));
+                q.offer(new Pair(index-1, node.left));
             }
 
             if(node.right != null) {
-                q.offer(new Pair(indx+1, node.right));
+                q.offer(new Pair(index+1, node.right));
             }
         }
 

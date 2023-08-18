@@ -1,7 +1,6 @@
 package tree;
 
 import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
 
 class BST {
     int data;
@@ -125,7 +124,7 @@ public class BSTOperations {
 
             BST inOrderSuccessor = inOrderSuccessor(root.right);
             root.data = inOrderSuccessor.data;
-            root.right = deleteNode(root.right, data); 
+            root.right = deleteNode(root.right, inOrderSuccessor.data); 
         }
         return root;
     }
@@ -158,7 +157,7 @@ public class BSTOperations {
          return leftSubTreeSum + rightSubTreeSum + root.data;
     }
 
-    int heightOfTree(BST root) {
+    static int heightOfTree(BST root) {
         if(root == null) {
             return 0;
         }
@@ -254,5 +253,7 @@ public class BSTOperations {
 
         System.out.println("The paths are : ");
         obj.rootToLeafPath(root,new ArrayList<>());
+
+        System.out.println(heightOfTree(root));
     }
 }
