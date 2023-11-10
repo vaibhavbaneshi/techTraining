@@ -4,42 +4,55 @@ import java.util.Queue;
 
 class practise {
 
-    public static ArrayList<ArrayList<Integer>> createGraph(int n, int m) {
-        ArrayList<ArrayList<Integer>> output = new ArrayList<>();
-
-        for(int i=0;i<n;i++) {
-            output.add(new ArrayList<>());
+    public static ArrayList<ArrayList<Integer>> createGraph(int v) {
+       ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i <= v; i++) {
+            adj.add(new ArrayList<>());
         }
 
-        output.get(1).add(2);
-        output.get(2).add(1);
+        adj.get(1).add(2);
+        adj.get(1).add(3);
+        adj.get(1).add(5);
 
-        output.get(2).add(3);
-        output.get(3).add(2);
+        adj.get(2).add(1);
+        adj.get(2).add(5);
 
-        output.get(1).add(3);
-        output.get(3).add(1);
+        adj.get(3).add(4);
+        adj.get(3).add(1);
 
-        return output;
+        adj.get(4).add(3);
+        adj.get(4).add(5);
+        adj.get(4).add(6);
+
+        adj.get(5).add(1);
+        adj.get(5).add(2);
+        adj.get(5).add(4);
+        adj.get(5).add(6);
+
+        adj.get(6).add(5);
+        adj.get(6).add(4);
+
+        return adj;
     }
 
-    public static ArrayList<Integer> bfs(ArrayList<ArrayList<Integer>> adj, int V) {
+    public static ArrayList<Integer> bfsGraph(ArrayList<ArrayList<Integer>> adj, int V) {
 
         ArrayList<Integer> output = new ArrayList<>();
         boolean vis[] = new boolean[V];
         Queue<Integer> q = new LinkedList<>();
 
-        q.add(0);
-        vis[0] = true;
+        q.add(1);
+        vis[1] = true;
 
         while(!q.isEmpty()) {
-            Integer node = q.poll();
-            output.add(node);
+            int curr = q.poll();
+            output.add(curr);
 
-            for(Integer it : adj.get(node)) {
-                if(vis[it] == false) {
-                    vis[it] = true;
-                    q.add(it);
+            for(int i=0;i<adj.get(curr).size();i++) {
+                int n = adj.get(curr).get(i);
+                if(!vis[n]) {
+                    vis[n] = true;
+                    q.add(n);
                 }
             }
         }
@@ -47,9 +60,23 @@ class practise {
         return output;
     }
 
+    public static ArrayList<Integer> dfsGraph(ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> result, boolean vis[], int src) {
+
+        vis[src] = true;
+        result.add(src);
+
+        for(int it : adj.get(src)) {
+            if(!vis[it]) {
+                dfsGraph(adj, result, vis, it);
+            }
+        }
+
+        return result;
+    }
+
     public static void print(ArrayList<ArrayList<Integer>> adj) {
-        for(int i=1;i<adj.size();i++) {
-            System.out.print(i + " is connected to: ");
+        for(int i=1;i<adj.size()-1;i++) {
+            System.out.print(i + " => ");
             for(int j=0;j<adj.get(i).size();j++) {
                 System.out.print(adj.get(i).get(j)+" ");
             }
@@ -58,9 +85,17 @@ class practise {
     }
     
     public static void main(String[] args) {
-
-        ArrayList<ArrayList<Integer>> result = createGraph(4, 3);
-
+        int v = 6;
+        ArrayList<ArrayList<Integer>> result = createGraph(v+1);
+        System.out.println("The graph is : ");
         print(result);
+
+        ArrayList<Integer> bfsList = bfsGraph(result, v+1); 
+        System.out.print("BFS : ");
+        System.out.println(bfsList);
+
+        ArrayList<Integer> dfsList = dfsGraph(result, new ArrayList<>(), new boolean[v+1], 1); 
+        System.out.print("DFS : ");
+        System.out.println(dfsList);
     }
 }

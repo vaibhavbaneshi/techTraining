@@ -3,64 +3,52 @@ package graph;
 import java.util.ArrayList;
 import java.util.Stack;
 
-class Edge {
-    int src;
-    int dest;
+class topologicalSorting {
 
-    Edge(int src,int dest) {
-        this.src = src;
-        this.dest = dest;
-    }
-}
+    public static void dfs(ArrayList<ArrayList<Integer>> adj, boolean[] vis, Stack<Integer> stack, int n) {
+        vis[n] = true;
 
-public class topologicalSorting {
-    
-    public static void createGraph(ArrayList<Edge> graph[]) {
-        for(int i=0;i<graph.length;i++) {
-            graph[i] = new ArrayList<>();
+        for(int it : adj.get(n)) {
+            if(!vis[it])
+                dfs(adj,vis,stack,it);
         }
 
-        graph[2].add(new Edge(2,3));
-        
-        graph[3].add(new Edge(3,1));
-
-        graph[4].add(new Edge(4,0));
-        graph[4].add(new Edge(4,1));
-
-        graph[5].add(new Edge(5,0));
-        graph[5].add(new Edge(5,2));
+        stack.push(n);
     }
 
-    public static void topoSort(ArrayList<Edge> graph[],boolean vis[],int current,Stack<Integer> stack) {
-        vis[current] = true;
-
-        for(int i=0;i<graph[current].size();i++) {
-            Edge e = graph[current].get(i);
-            if(!vis[e.dest]) {
-                topoSort(graph, vis, e.dest, stack);
-            }
-        }
-        stack.push(current);
-    }
-
-    public static void topSortCall(ArrayList<Edge> graph[],int V) {
-        Stack<Integer> stack = new Stack<>();
-        boolean[] vis = new boolean[V];
-
+    public static ArrayList<Integer> topoSort(ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> output, boolean[] vis,          
+                                              Stack<Integer> stack, int V) {
         for(int i=0;i<V;i++) {
-            if(!vis[i]) {
-                topoSort(graph, vis, i, stack);
-            }
+            if(!vis[i])
+                dfs(adj, vis, stack, i);
         }
-        while(!stack.isEmpty()) {
-            System.out.print(stack.pop()+" ");
+        
+        while(!stack.isEmpty()) { 
+            output.add(stack.pop());
         }
+
+        return output;
     }
 
     public static void main(String[] args) {
-        int V = 6;
-        ArrayList<Edge> graph[] =  new ArrayList[V];
-        createGraph(graph);
-        topSortCall(graph, V);
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        int v=5;
+        for (int i = 0; i <= v; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        adj.get(2).add(3);
+
+        adj.get(3).add(1);
+
+        adj.get(4).add(0);
+        adj.get(4).add(1);
+
+        adj.get(5).add(2);
+        adj.get(5).add(0);
+
+        ArrayList<Integer> output = topoSort(adj, new ArrayList<>(), new boolean[v+1], new Stack<>(), v+1);
+
+        System.out.println("Topology Sort : "+output);
     }
 }
