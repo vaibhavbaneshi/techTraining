@@ -1,18 +1,14 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class kahnAlgo {
 
-    public static ArrayList<Integer> topoSort(ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> output, int V) {
+    public static ArrayList<Integer> topoKahn(ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> output, Stack<Integer> stack, int V) {
         
-        int inDegree[] = new int[V];
+        int[] inDegree = new int[V];
         for(int i=0;i<V;i++) {
-            for(int it : adj.get(i)) {
-                inDegree[it]++;
-            }
+            inDegree[i]++;
         }
 
         Queue<Integer> q = new LinkedList<>();
@@ -23,10 +19,10 @@ class kahnAlgo {
 
         while(!q.isEmpty()) {
             int curr = q.peek();
-            q.remove();
             output.add(curr);
+            q.poll();
 
-            for(int it : adj.get(curr)) {
+            for(Integer it : adj.get(curr)) {
                 inDegree[it]--;
 
                 if(inDegree[it] == 0)
@@ -54,7 +50,7 @@ class kahnAlgo {
         adj.get(5).add(2);
         adj.get(5).add(0);
 
-        ArrayList<Integer> output = topoSort(adj, new ArrayList<>(), v+1);
+        ArrayList<Integer> output = topoKahn(adj, new ArrayList<>(), new Stack<>(), v+1);
 
         System.out.println("Topology Sort using Kahn's Algorithm : "+output);
     }

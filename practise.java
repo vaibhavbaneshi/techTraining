@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 class practise {
 
@@ -74,6 +75,34 @@ class practise {
         return result;
     }
 
+    public static void topoDFS(ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> result, boolean vis[], Stack<Integer> stack, int src) {
+
+        vis[src] = true;
+        result.add(src);
+
+        for(int i=0;i<adj.get(src).size();i++) {
+            if(!vis[i])
+                dfsGraph(adj, result, vis, i);
+        }
+
+        stack.push(src);
+    }
+
+    public static ArrayList<Integer> topoSort(ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> output, boolean[] vis, int V) {
+
+        Stack<Integer> stack = new Stack<>();
+        for(int i=0;i<V;i++) {
+            if(!vis[i])
+                dfsGraph(adj,output,vis,i);
+        }
+
+        while(!stack.isEmpty()) {
+            output.add(stack.pop());
+        }
+
+        return output;
+    }
+
     public static void print(ArrayList<ArrayList<Integer>> adj) {
         for(int i=1;i<adj.size()-1;i++) {
             System.out.print(i + " => ");
@@ -97,5 +126,9 @@ class practise {
         ArrayList<Integer> dfsList = dfsGraph(result, new ArrayList<>(), new boolean[v+1], 1); 
         System.out.print("DFS : ");
         System.out.println(dfsList);
+
+        ArrayList<Integer> output = topoSort(result, new ArrayList<>(), new boolean[v+1], v); 
+        System.out.print("Topology Sort : ");
+        System.out.println(output);
     }
 }
