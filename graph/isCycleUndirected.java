@@ -34,34 +34,5 @@ class isCycleUndefined {
 
     public static void main(String[] args) {
 
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        int v = 6;
-
-        for(int i=0;i<v;i++) {
-            adj.add(new ArrayList<>());
-        }
-
-        adj.get(0).add(1);
-        adj.get(0).add(4);
-
-        adj.get(1).add(0);
-        adj.get(1).add(2);
-        adj.get(1).add(4);
-
-        adj.get(2).add(1);
-        adj.get(2).add(3);
-
-        adj.get(3).add(2);
-
-        adj.get(4).add(0);
-        adj.get(4).add(1);
-        adj.get(4).add(5);
-
-        adj.get(5).add(4);
-        
-
-        boolean output = isCycle(adj,new boolean[v+1],-1,v);
-
-        System.out.println("Is there a loop in the graph : "+output);
     }
 }
