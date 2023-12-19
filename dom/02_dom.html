@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style = "background-color: #212121; color: #ffff">
+    
+</body>
+<script>
+    const div = document.createElement('div')
+    console.log(div);
+    div.className = "main";
+    div.id = Math.random() * 10;
+    div.setAttribute("title", "generateTitle")
+    div.style.backgroundColor = 'blue'
+    div.style.padding = "10px";
+    div.innerHTML = "VaibhavBaneshi using innerHTML" //Both ways are used to add inner text 
+    const addText = document.createTextNode("/Vaibhav_Baneshi using createTextNode") //Both ways are used to add inner text 
+    div.appendChild(addText)
+
+    document.body.appendChild(div)
+</script>
+</html>
